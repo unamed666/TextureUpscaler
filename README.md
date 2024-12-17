@@ -7,5 +7,5 @@ TEXTURE UPSCALER
 </p>
 
 <h1 align="center">
-[DOWNLOAD HERE](https://github.com/eroge69/TextureUpscaler/releases/tag/1.0)
+DOWNLOAD [HERE](https://github.com/eroge69/TextureUpscaler/releases/latest)
 </h1>
