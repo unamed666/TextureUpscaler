@@ -118,7 +118,7 @@ namespace ImageScaler
 
             string opaquePath = Path.Combine(directory, $"{baseName}_opaque_resized.png");
             string maskPath = Path.Combine(directory, $"{baseName}_mask_resized.png");
-            string finalPath = Path.Combine(directory, $"{baseName}_final.png");
+            string finalPath = Path.Combine(directory, $"{baseName}_resized.png");
 
             try
             {
@@ -400,7 +400,7 @@ namespace ImageScaler
             string opaquePath2 = Path.Combine(directory, $"{baseName}_opaque_upscaled.png");
             string maskPath = Path.Combine(directory, $"{baseName}_mask.png");
             string maskPath2 = Path.Combine(directory, $"{baseName}_mask_upscaled.png");
-            string finalPath = Path.Combine(directory, $"{baseName}_final.png");
+            string finalPath = Path.Combine(directory, $"{baseName}_upscaled.png");
 
             try
             {

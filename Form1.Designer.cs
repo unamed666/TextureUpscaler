@@ -193,7 +193,7 @@
             btnUpscale.ForeColor = Color.Transparent;
             btnUpscale.Location = new Point(9, 22);
             btnUpscale.Name = "btnUpscale";
-            btnUpscale.Size = new Size(177, 38);
+            btnUpscale.Size = new Size(223, 38);
             btnUpscale.TabIndex = 8;
             btnUpscale.Text = "UPSCALE";
             btnUpscale.UseVisualStyleBackColor = false;
@@ -288,7 +288,7 @@
             panelResize.Controls.Add(label2);
             panelResize.Location = new Point(0, 168);
             panelResize.Name = "panelResize";
-            panelResize.Size = new Size(801, 78);
+            panelResize.Size = new Size(798, 78);
             panelResize.TabIndex = 16;
             panelResize.Paint += panel1_Paint;
             // 
@@ -301,7 +301,7 @@
             panelUpscale.Controls.Add(radX3);
             panelUpscale.Location = new Point(0, 168);
             panelUpscale.Name = "panelUpscale";
-            panelUpscale.Size = new Size(755, 78);
+            panelUpscale.Size = new Size(798, 78);
             panelUpscale.TabIndex = 7;
             // 
             // label4

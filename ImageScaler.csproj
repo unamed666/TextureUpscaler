@@ -11,10 +11,18 @@
     <Authors>UNAMED666</Authors>
     <AssemblyName>TextureUpscaler</AssemblyName>
     <RootNamespace>ImageScaler</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="cattologo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Documents\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
