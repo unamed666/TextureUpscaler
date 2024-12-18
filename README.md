@@ -15,11 +15,11 @@ Original Real-ESRGAN [HERE](https://github.com/xinntao/Real-ESRGAN?tab=readme-ov
 For normal image like jpg, screenshot, photo, or video; Use [Realesrgan GUI ](https://github.com/eroge69/RealesrganGUI) <br><br>
 </h2>
 
-- Supports PNG and DDS formats input
-- Support drag-and-drop input method
-- Custom resize scale
-- Upscale using Real-ESRGAN-anime
-- Convert PNG to BC7 linear/srgb DDS
+- Supports PNG and DDS format inputs
+- Supports drag-and-drop input method
+- Customizable resize scale
+- Upscales using Real-ESRGAN (anime model)
+- Converts PNG to BC7 linear/sRGB DDS
   
 <br><br><h2 align="center">Image comparison : </h2><br>
 Original 1024X1024 with transparency ON (you can download this as an experiment sample)<br>
