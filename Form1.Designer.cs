@@ -127,7 +127,7 @@
             btnDifuse.Name = "btnDifuse";
             btnDifuse.Size = new Size(117, 38);
             btnDifuse.TabIndex = 13;
-            btnDifuse.Text = "DIFUSE";
+            btnDifuse.Text = "SRGB ";
             btnDifuse.UseVisualStyleBackColor = false;
             btnDifuse.Click += BtnDifuse_Click;
             // 
