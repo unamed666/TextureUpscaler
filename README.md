@@ -40,10 +40,13 @@ Original 1024X1024 with transparency ON <br>
 > Output always with transparency ON; this image is only a comparison to make it easier to see.
 <br>
 
-<br><br><h2 align="center">UI MENU<br>
+<br><br><h2 align="center">UI MENU</h2><br><br><br>
+<p align="center">
  <img width="621" height="400" src=https://github.com/user-attachments/assets/c48833db-8a04-4dae-a11d-83541c2cbf94>
+<br>.</p>
+<p align="center">
+ <img width="621" height="400" src=https://github.com/user-attachments/assets/e95c4543-7fc5-41b5-aa40-1e85f0da4fbf>
+
 </p>
- <img width="621" height="400" src=https://github.com/user-attachments/assets/32b14401-8cd2-430a-a374-a87ea17f2313>
-</p>
-</h2><br>
+
 
