@@ -11,10 +11,13 @@ Designed for texture files with transparency to ensure the alpha channel remains
 
 [DOWNLOAD HERE](https://github.com/eroge69/TextureUpscaler/releases/latest) <br></br><br></br>
 
-Original Real-ESRGAN [HERE](https://github.com/xinntao/Real-ESRGAN?tab=readme-ov-file#portable-executable-files-ncnn) 
+Original Real-ESRGAN [HERE](https://github.com/xinntao/Real-ESRGAN?tab=readme-ov-file#portable-executable-files-ncnn)  <br><br>
+
+For normal image like jpg, screenshot, photo, or video; Use [Realesrgan GUI ](https://github.com/eroge69/RealesrganGUI) <br><br>
 </h2>
 
 - Supports PNG and DDS formats input
+- Support drag-and-drop input method
 - Custom resize scale
 - Upscale using Real-ESRGAN-anime
 - Convert PNG to BC7 linear/srgb DDS
