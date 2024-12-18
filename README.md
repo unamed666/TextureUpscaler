@@ -37,7 +37,7 @@ Original 1024X1024 with transparency ON <br>
   <img width="400" height="400" src=https://github.com/user-attachments/assets/c9b1e4c2-58e9-4668-bf5f-a2e060980bfe>
 </p>
 
-> Output always with transparency ON; this image is only a comparison to make it easier to see.
+> Output always with transparency ON; this image is only comparison to make it easier to see.
 <br>
 
 <br><br><h2 align="center">UI MENU</h2><br><br><br>
