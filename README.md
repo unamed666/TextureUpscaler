@@ -23,7 +23,7 @@ For normal image like jpg, screenshot, photo, or video; Use [Realesrgan GUI ](ht
 - Convert PNG to BC7 linear/srgb DDS
   
 <br><br><h2 align="center">Image comparison : </h2><br>
-Original 1024X1024 with transparency ON <br>
+Original 1024X1024 with transparency ON (you can download this as experiment sample)<br>
 <p align="center">
   <img width="200" height="200" src=https://github.com/user-attachments/assets/a0c22892-d98a-4c4e-9539-641db5144119>
 </p>
