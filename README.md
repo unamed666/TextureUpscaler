@@ -44,10 +44,11 @@ Original 1024X1024 with transparency ON (you can download this as an experiment 
 
 <br><br><h2 align="center">UI MENU</h2><br><br><br>
 <p align="center">
- <img width="621" height="400" src=https://github.com/user-attachments/assets/c48833db-8a04-4dae-a11d-83541c2cbf94>
+ <img width="621" height="400" src=https://github.com/user-attachments/assets/6478ae6f-c81b-40de-97fc-10b4116096ed>
 <br>.</p>
+
 <p align="center">
- <img width="621" height="400" src=https://github.com/user-attachments/assets/e95c4543-7fc5-41b5-aa40-1e85f0da4fbf>
+ <img width="621" height="400" src=https://github.com/user-attachments/assets/888d590f-8dc3-4744-8736-59181851856d>
 
 </p>
 
