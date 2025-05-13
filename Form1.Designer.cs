@@ -32,6 +32,7 @@ namespace ImageScaler
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnSelectImage = new System.Windows.Forms.Button();
             this.btnResize = new System.Windows.Forms.Button();
@@ -61,7 +62,7 @@ namespace ImageScaler
             this.checkSound = new System.Windows.Forms.CheckBox();
             this.checkTemp = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.CheckTop = new System.Windows.Forms.CheckBox();
+            this.checkTop = new System.Windows.Forms.CheckBox();
             this.BtnSwap3 = new System.Windows.Forms.Button();
             this.panelBatch = new System.Windows.Forms.Panel();
             this.pngCheck = new System.Windows.Forms.CheckBox();
@@ -74,6 +75,9 @@ namespace ImageScaler
             this.radX2A = new System.Windows.Forms.RadioButton();
             this.radX4A = new System.Windows.Forms.RadioButton();
             this.radX3A = new System.Windows.Forms.RadioButton();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panelResize.SuspendLayout();
             this.panelUpscale.SuspendLayout();
             this.panelBatch.SuspendLayout();
@@ -331,9 +335,9 @@ namespace ImageScaler
             this.BtnOpen2.BackColor = System.Drawing.Color.Black;
             this.BtnOpen2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnOpen2.ForeColor = System.Drawing.Color.Transparent;
-            this.BtnOpen2.Location = new System.Drawing.Point(513, 182);
+            this.BtnOpen2.Location = new System.Drawing.Point(490, 182);
             this.BtnOpen2.Name = "BtnOpen2";
-            this.BtnOpen2.Size = new System.Drawing.Size(152, 33);
+            this.BtnOpen2.Size = new System.Drawing.Size(175, 33);
             this.BtnOpen2.TabIndex = 25;
             this.BtnOpen2.Text = "OPEN FILE LOCATION";
             this.BtnOpen2.UseVisualStyleBackColor = false;
@@ -362,9 +366,9 @@ namespace ImageScaler
             this.BtnOpen3.BackColor = System.Drawing.Color.Black;
             this.BtnOpen3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnOpen3.ForeColor = System.Drawing.Color.Transparent;
-            this.BtnOpen3.Location = new System.Drawing.Point(513, 182);
+            this.BtnOpen3.Location = new System.Drawing.Point(490, 182);
             this.BtnOpen3.Name = "BtnOpen3";
-            this.BtnOpen3.Size = new System.Drawing.Size(152, 33);
+            this.BtnOpen3.Size = new System.Drawing.Size(175, 33);
             this.BtnOpen3.TabIndex = 25;
             this.BtnOpen3.Text = "OPEN FILE LOCATION";
             this.BtnOpen3.UseVisualStyleBackColor = false;
@@ -480,18 +484,18 @@ namespace ImageScaler
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // CheckTop
+            // checkTop
             // 
-            this.CheckTop.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.CheckTop.AutoSize = true;
-            this.CheckTop.ForeColor = System.Drawing.Color.Lime;
-            this.CheckTop.Location = new System.Drawing.Point(9, 64);
-            this.CheckTop.Name = "CheckTop";
-            this.CheckTop.Size = new System.Drawing.Size(98, 17);
-            this.CheckTop.TabIndex = 21;
-            this.CheckTop.Text = "Always On Top";
-            this.CheckTop.UseVisualStyleBackColor = true;
-            this.CheckTop.CheckedChanged += new System.EventHandler(this.CheckTop_CheckedChanged);
+            this.checkTop.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.checkTop.AutoSize = true;
+            this.checkTop.ForeColor = System.Drawing.Color.Lime;
+            this.checkTop.Location = new System.Drawing.Point(9, 64);
+            this.checkTop.Name = "checkTop";
+            this.checkTop.Size = new System.Drawing.Size(98, 17);
+            this.checkTop.TabIndex = 21;
+            this.checkTop.Text = "Always On Top";
+            this.checkTop.UseVisualStyleBackColor = true;
+            this.checkTop.CheckedChanged += new System.EventHandler(this.CheckTop_CheckedChanged);
             // 
             // BtnSwap3
             // 
@@ -547,9 +551,9 @@ namespace ImageScaler
             this.BtnOpen1.BackColor = System.Drawing.Color.Black;
             this.BtnOpen1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnOpen1.ForeColor = System.Drawing.Color.Transparent;
-            this.BtnOpen1.Location = new System.Drawing.Point(513, 182);
+            this.BtnOpen1.Location = new System.Drawing.Point(490, 182);
             this.BtnOpen1.Name = "BtnOpen1";
-            this.BtnOpen1.Size = new System.Drawing.Size(152, 33);
+            this.BtnOpen1.Size = new System.Drawing.Size(175, 33);
             this.BtnOpen1.TabIndex = 24;
             this.BtnOpen1.Text = "OPEN FOLDER LOCATION";
             this.BtnOpen1.UseVisualStyleBackColor = false;
@@ -674,6 +678,41 @@ namespace ImageScaler
             this.radX3A.Text = "X3";
             this.radX3A.UseVisualStyleBackColor = false;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "7"});
+            this.comboBox1.Location = new System.Drawing.Point(57, 326);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(52, 24);
+            this.comboBox1.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.comboBox1, "BC 1-3 = DX9+ game\r\nBC 7     = DX11+ game\r\n\r\nThis is just an overview and may not" +
+        " always be accurate. Check your game forum to prevent conversion errors\r\n");
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Black;
+            this.label7.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.label7.ForeColor = System.Drawing.Color.Transparent;
+            this.label7.Location = new System.Drawing.Point(14, 328);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(37, 19);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "BC :";
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.IsBalloon = true;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -681,8 +720,10 @@ namespace ImageScaler
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(686, 468);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.BtnSwap3);
-            this.Controls.Add(this.CheckTop);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.checkTop);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.checkTemp);
             this.Controls.Add(this.checkSound);
@@ -697,6 +738,9 @@ namespace ImageScaler
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Texture Upscaler";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.panelResize.ResumeLayout(false);
             this.panelResize.PerformLayout();
             this.panelUpscale.ResumeLayout(false);
@@ -732,7 +776,7 @@ namespace ImageScaler
         private CheckBox checkSound;
         private CheckBox checkTemp;
         private LinkLabel linkLabel1;
-        private CheckBox CheckTop;
+        private CheckBox checkTop;
         private Button BtnSwap3;
         private Label label5;
         private Button btnLinear2;
@@ -751,5 +795,8 @@ namespace ImageScaler
         private Button BtnOpen3;
         private Button BtnOpen1;
         private CheckBox pngCheck;
+        private ComboBox comboBox1;
+        private Label label7;
+        private ToolTip toolTip1;
     }
 }
