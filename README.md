@@ -10,7 +10,11 @@ TEXTURE UPSCALER
 Designed for texture files with transparency to ensure the alpha channel remains intact during scaling. <br><br><br>
 
 [DOWNLOAD HERE](https://github.com/eroge69/TextureUpscaler/releases/latest) <br></br><br></br>
-Original Real-ESRGAN [HERE](https://github.com/xinntao/Real-ESRGAN?tab=readme-ov-file#portable-executable-files-ncnn)  <br><br>
+Tools used here : <br>
+[Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN?tab=readme-ov-file#portable-executable-files-ncnn) <br>
+[TexDiag](https://github.com/microsoft/DirectXTex/wiki/texdiag)<br>
+[Texconv](https://github.com/microsoft/DirectXTex/wiki/Texconv)<br>
+[ImageMagick](https://github.com/imagemagick/imagemagick)<br><br>
 
 For normal image like jpg, screenshot, photo, or video; Use [Realesrgan GUI ](https://github.com/eroge69/RealesrganGUI) <br><br>
 </h2>
