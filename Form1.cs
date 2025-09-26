@@ -1003,7 +1003,7 @@ namespace ImageScaler
                     Log($"\nSelected folder: {selectedFolderPath}");
                     txtName.Text = Path.GetFileName(selectedFolder);
                     txtName.SelectionStart = txtName.Text.Length;
-                    txtName.ScrollToCaret();
+                    txtName.ScrollToCaret(); 
                     Log($"\n");
                 }
                 else
