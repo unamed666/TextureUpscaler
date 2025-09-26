@@ -9,9 +9,10 @@ TEXTURE UPSCALER
 <h2 align="center">
 Designed for texture files with transparency to ensure the alpha channel remains intact during scaling. <br><br><br>
 
-Alternative Link : [HERE](https://gamebanana.com/tools/18702)
 
-[DOWNLOAD HERE](https://github.com/eroge69/TextureUpscaler/releases/latest) <br></br><br></br>
+
+[DOWNLOAD HERE](https://github.com/eroge69/TextureUpscaler/releases/latest) <br></br>
+Alternative Link : [HERE](https://gamebanana.com/tools/18702)<br></br><br></br>
 Original Real-ESRGAN [HERE](https://github.com/xinntao/Real-ESRGAN?tab=readme-ov-file#portable-executable-files-ncnn)  <br><br>
 
 For normal image like jpg, screenshot, photo, or video; Use [Realesrgan GUI ](https://github.com/eroge69/RealesrganGUI) <br><br>
