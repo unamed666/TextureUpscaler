@@ -9,6 +9,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Data.SqlTypes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace ImageScaler
 {
@@ -17,7 +18,10 @@ namespace ImageScaler
         private string selectedImagePath = string.Empty;
         private string imgscale = "2";
         private string bc="7";
+        private string upstat = "";
+        private string upstat2 = "";
         string dataimg = "realesr-animevideov3";
+        string formatValue = null;
 
         public Form1()
         {
@@ -76,6 +80,7 @@ namespace ImageScaler
                     }
                 }
             }
+            this.TopMost = checkTop.Checked;
         }
 
 
@@ -96,6 +101,7 @@ namespace ImageScaler
         // Fungsi untuk memilih gambar
         private void BtnSelectImage_Click(object sender, EventArgs e)
         {
+            txtData.Clear();
             btnResize.ForeColor = Color.Transparent;
             btnResize.BackColor = Color.Black;
             btnUpscale.ForeColor = Color.Transparent;
@@ -104,6 +110,10 @@ namespace ImageScaler
             btnDifuse.BackColor = Color.Black;
             btnLinear.ForeColor = Color.Transparent;
             btnLinear.BackColor = Color.Black;
+            btnDifuse2.ForeColor = Color.Transparent;
+            btnDifuse2.BackColor = Color.Black;
+            btnLinear2.ForeColor = Color.Transparent;
+            btnLinear2.BackColor = Color.Black;
             BtnOpen2.ForeColor = Color.Transparent;
             BtnOpen2.BackColor = Color.Black;
             BtnOpen3.ForeColor = Color.Transparent;
@@ -116,6 +126,8 @@ namespace ImageScaler
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     selectedImagePath = openFileDialog.FileName;
+                    Texdiag(selectedImagePath);
+                    LogData("-----------------------------------------");
 
                     // Cek jika file adalah .dds, dan konversi ke .png
                     if (Path.GetExtension(selectedImagePath).ToLower() == ".dds")
@@ -124,6 +136,8 @@ namespace ImageScaler
                         string pngDir = Path.GetDirectoryName(selectedImagePath);
                         ConvertDDSToPNG(selectedImagePath, pngDir, pngPath);
                         selectedImagePath = pngPath; // Setelah konversi, pilih file .png
+                        Texdiag(selectedImagePath);
+                        LogData("-----------------------------------------");                        
                     }
 
                     // Ambil dimensi gambar
@@ -134,6 +148,9 @@ namespace ImageScaler
                     }
 
                     Log($"\nSelected image: {selectedImagePath}");
+                    txtName.Text = Path.GetFileName(selectedImagePath);
+                    txtName.SelectionStart = txtName.Text.Length;
+                    txtName.ScrollToCaret();
                 }
                 else
                 {
@@ -149,12 +166,14 @@ namespace ImageScaler
             btnResize.BackColor = Color.Black;
             btnUpscale.ForeColor = Color.Transparent;
             btnUpscale.BackColor = Color.Black;
-            btnUpscale2.ForeColor = Color.Transparent;
-            btnUpscale2.BackColor = Color.Black;
             btnDifuse.ForeColor = Color.Transparent;
             btnDifuse.BackColor = Color.Black;
             btnLinear.ForeColor = Color.Transparent;
             btnLinear.BackColor = Color.Black;
+            btnDifuse2.ForeColor = Color.Transparent;
+            btnDifuse2.BackColor = Color.Black;
+            btnLinear2.ForeColor = Color.Transparent;
+            btnLinear2.BackColor = Color.Black;
             BtnOpen2.ForeColor = Color.Transparent;
             BtnOpen2.BackColor = Color.Black;
             BtnOpen3.ForeColor = Color.Transparent;
@@ -163,6 +182,7 @@ namespace ImageScaler
             if (string.IsNullOrEmpty(selectedImagePath))
             {
                 Log("\nPlease select an image first.");
+                Log($"\n");
                 return;
             }
 
@@ -170,8 +190,7 @@ namespace ImageScaler
             {
                 Log("\nEnter a valid number for width and height.");
                 return;
-            }
-
+            }            
             string directory = Path.GetDirectoryName(selectedImagePath);
             string baseName = Path.GetFileNameWithoutExtension(selectedImagePath);
 
@@ -205,6 +224,8 @@ namespace ImageScaler
                 }
 
                 Log("\nProcess complete!");
+                Log("----------------------------------------------------------------------------------------");
+                Log("----------------------------------------------------------------------------------------");
             }
             catch (Exception ex)
             {
@@ -213,6 +234,8 @@ namespace ImageScaler
 
             selectedImagePath = finalPath;
             Log($"\nSelected image: {finalPath}");
+            Texdiag(finalPath);
+            LogData("-----------------------------------------");
             PlayCompletionSound();
             btnResize.ForeColor = Color.Black;
             btnResize.BackColor = Color.Lime;
@@ -280,8 +303,17 @@ namespace ImageScaler
 
                 if (!string.IsNullOrEmpty(output))
                 {
-                    Log($"\nOutput: {output}");
+                    var lines = output.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+                    var filteredLines = lines.Skip(2); // Lewatkan 2 baris pertama
+                    string cleanedOutput = string.Join(Environment.NewLine, filteredLines);
+
+                    if (!string.IsNullOrWhiteSpace(cleanedOutput))
+                    {
+                        Log($"\nOutput: {cleanedOutput}");
+                        Log("----------------------------------------------------------------------------------------");
+                    }
                 }
+
 
                 if (!string.IsNullOrEmpty(error))
                 {
@@ -290,7 +322,66 @@ namespace ImageScaler
 
                 if (process.ExitCode != 0)
                 {
-                    throw new Exception($"ImageMagick command failed: {error}");
+                    throw new Exception($"Texconv command failed: {error}");
+                }
+            }
+        }
+
+        private void ExecuteTexdiag(string arguments)
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "texdiag.exe",
+                Arguments = arguments,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+            };
+
+            using (var process = Process.Start(startInfo))
+            {
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                process.WaitForExit();
+
+                if (!string.IsNullOrEmpty(output))
+                {
+                    var lines = output.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+                    var filteredLines = lines.Skip(2); // Lewatkan 2 baris pertama
+                    string cleanedOutput = string.Join(Environment.NewLine, filteredLines);
+
+                    // Ambil nilai dari "format = ..."
+                    
+                    foreach (var line in filteredLines)
+                    {
+                        if (line.TrimStart().StartsWith("format"))
+                        {
+                            var parts = line.Split('=');
+                            if (parts.Length == 2)
+                            {
+                                formatValue = parts[1].Trim();
+                                break;
+                            }
+                        }
+                    }
+                    SRGBcheck.Checked = formatValue?.ToUpper().Contains("SRGB") == true;                    
+                    upstat = SRGBcheck.Checked ? "" : "-srgbi";
+                    upstat2 = SRGBcheck.Checked ? "-srgbo" : "";
+
+
+                    LogData($"\nOutput: {cleanedOutput}");
+                }
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    LogData($"\nError: {error}");
+                }
+
+                if (process.ExitCode != 0)
+                {
+                    throw new Exception($"Texdiag command failed: {error}");
                 }
             }
         }
@@ -315,10 +406,28 @@ namespace ImageScaler
             }
         }
 
+        private void Texdiag(string ddsPath)
+        {
+            try
+            {
+                //ExecuteMagickCommand($"\"{ddsPath}\" \"{pngPath}\"");
+
+                ExecuteTexdiag($" info  \"{ddsPath}\" ");                
+            }
+            catch (Exception ex)
+            {              
+                LogData($"\nFailed to check info data : {ex.Message}");                
+            }
+        }
+
         // Fungsi untuk mencatat log
         private void Log(string message)
         {
             txtLog.AppendText($"{message}{Environment.NewLine}");
+        }
+        private void LogData(string message)
+        {
+            txtData.AppendText($"{message}{Environment.NewLine}");
         }
 
 
@@ -333,6 +442,10 @@ namespace ImageScaler
             btnDifuse.BackColor = Color.Black;
             btnLinear.ForeColor = Color.Transparent;
             btnLinear.BackColor = Color.Black;
+            btnDifuse2.ForeColor = Color.Transparent;
+            btnDifuse2.BackColor = Color.Black;
+            btnLinear2.ForeColor = Color.Transparent;
+            btnLinear2.BackColor = Color.Black;
             BtnOpen2.ForeColor = Color.Transparent;
             BtnOpen2.BackColor = Color.Black;
             BtnOpen3.ForeColor = Color.Transparent;
@@ -341,15 +454,21 @@ namespace ImageScaler
             if (string.IsNullOrEmpty(selectedImagePath))
             {
                 Log("\nPlease select an image first.");
+                Log($"\n");
                 return;
             }
 
             else if (Path.GetExtension(selectedImagePath).ToLower() == ".png")
             {
                 string outputFilePath = Path.GetDirectoryName(selectedImagePath);
-                ConvertToDDS(selectedImagePath, outputFilePath, $"-f BC{bc}_UNORM_SRGB -nologo --separate-alpha");
+                ConvertToDDS(selectedImagePath, outputFilePath, $"-f BC{bc}_UNORM_SRGB {upstat} -nologo --separate-alpha");
                 selectedImagePath = GetOutputFilePath(selectedImagePath, ".dds");
                 Log($"\nSelected image: {selectedImagePath}");
+                Texdiag(selectedImagePath);
+                txtName.Text = Path.GetFileName(selectedImagePath);
+                txtName.SelectionStart = txtName.Text.Length;
+                txtName.ScrollToCaret();
+                LogData("-----------------------------------------");
                 PlayCompletionSound();
                 Log("\nPNG file processed and converted to SRGB.\n");
                 btnDifuse.ForeColor = Color.Black;
@@ -378,6 +497,10 @@ namespace ImageScaler
             btnDifuse.BackColor = Color.Black;
             btnLinear.ForeColor = Color.Transparent;
             btnLinear.BackColor = Color.Black;
+            btnDifuse2.ForeColor = Color.Transparent;
+            btnDifuse2.BackColor = Color.Black;
+            btnLinear2.ForeColor = Color.Transparent;
+            btnLinear2.BackColor = Color.Black;
             BtnOpen2.ForeColor = Color.Transparent;
             BtnOpen2.BackColor = Color.Black;
             BtnOpen3.ForeColor = Color.Transparent;
@@ -392,9 +515,14 @@ namespace ImageScaler
             else if (Path.GetExtension(selectedImagePath).ToLower() == ".png")
             {
                 string outputFilePath = Path.GetDirectoryName(selectedImagePath);
-                ConvertToDDS(selectedImagePath, outputFilePath, $" -f BC{bc}_UNORM -nologo --separate-alpha ");
+                ConvertToDDS(selectedImagePath, outputFilePath, $" -f BC{bc}_UNORM {upstat2} -nologo --separate-alpha ");
                 selectedImagePath = GetOutputFilePath(selectedImagePath, ".dds");
                 Log($"\nSelected image: {selectedImagePath}");
+                Texdiag(selectedImagePath);
+                txtName.Text = Path.GetFileName(selectedImagePath);
+                txtName.SelectionStart = txtName.Text.Length;
+                txtName.ScrollToCaret();
+                LogData("-----------------------------------------");
                 PlayCompletionSound();
                 Log("\nPNG file processed and converted to Linear.\n");
                 Log($"\n");
@@ -487,18 +615,21 @@ namespace ImageScaler
         {
             imgscale = "2";
             dataimg = "realesr-animevideov3";
+            Log("X2 UPSCALE Selected");
         }
 
         private void RadX3_CheckedChanged(object sender, EventArgs e)
         {
             imgscale = "3";
             dataimg = "realesr-animevideov3";
+            Log("X3 UPSCALE Selected");
         }
 
         private void RadX4_CheckedChanged(object sender, EventArgs e)
         {
             imgscale = "4";
             dataimg = "realesrgan-x4plus-anime";
+            Log("X4 UPSCALE Selected");
         }
 
         private void BtnUpscale_Click(object sender, EventArgs e)
@@ -513,6 +644,10 @@ namespace ImageScaler
             btnDifuse.BackColor = Color.Black;
             btnLinear.ForeColor = Color.Transparent;
             btnLinear.BackColor = Color.Black;
+            btnDifuse2.ForeColor = Color.Transparent;
+            btnDifuse2.BackColor = Color.Black;
+            btnLinear2.ForeColor = Color.Transparent;
+            btnLinear2.BackColor = Color.Black;
             BtnOpen2.ForeColor = Color.Transparent;
             BtnOpen2.BackColor = Color.Black;
             BtnOpen3.ForeColor = Color.Transparent;
@@ -523,8 +658,7 @@ namespace ImageScaler
                 Log("\nPlease select an image first.");
                 Log($"\n");
                 return;
-            }
-
+            }            
             string directory = Path.GetDirectoryName(selectedImagePath);
             string baseName = Path.GetFileNameWithoutExtension(selectedImagePath);
 
@@ -536,6 +670,8 @@ namespace ImageScaler
 
             try
             {
+                Log("----------------------------------------------------------------------------------------");
+                Log($"\n");
                 Log("\nStarting process...");
 
                 // File 1: Hilangkan transparansi
@@ -597,6 +733,8 @@ namespace ImageScaler
                 }
 
                 Log("\nProcess complete!");
+                Log("----------------------------------------------------------------------------------------");
+                Log("----------------------------------------------------------------------------------------");
             }
             catch (Exception ex)
             {
@@ -606,6 +744,11 @@ namespace ImageScaler
             selectedImagePath = finalPath;
             Log($"\n");
             Log($"\nImage selected: {finalPath}");
+            Texdiag(finalPath);
+            txtName.Text = Path.GetFileName(finalPath);
+            txtName.SelectionStart = txtName.Text.Length;
+            txtName.ScrollToCaret();
+            LogData("-----------------------------------------");
             Log($"\n");
             PlayCompletionSound();
             btnUpscale.ForeColor = Color.Black;
@@ -637,6 +780,9 @@ namespace ImageScaler
             panelResize.BringToFront();
             comboBox1.BringToFront();
             label7.BringToFront();
+            SRGBcheck.BringToFront();
+            label8.BringToFront();
+            txtName.BringToFront();
         }
 
         private void BtnSwap2_Click(object sender, EventArgs e)
@@ -647,6 +793,9 @@ namespace ImageScaler
             panelUpscale.BringToFront();
             comboBox1.BringToFront();
             label7.BringToFront();
+            SRGBcheck.BringToFront();
+            label8.BringToFront();
+            txtName.BringToFront();
         }
         private void BtnSwap3_Click(object sender, EventArgs e)
         {
@@ -656,12 +805,13 @@ namespace ImageScaler
             panelBatch.BringToFront();
             comboBox1.BringToFront();
             label7.BringToFront();
+            SRGBcheck.BringToFront();
+            label8.BringToFront();
+            txtName.BringToFront();
         }
 
         private void checkSound_CheckedChanged(object sender, EventArgs e)
         {
-            //Properties.Settings.Default.CheckSoundz = checkSound.Checked;
-            //Properties.Settings.Default.Save();
             SaveSettings();
         }
 
@@ -686,16 +836,12 @@ namespace ImageScaler
 
         private void checkTemp_CheckedChanged(object sender, EventArgs e)
         {
-            //Properties.Settings.Default.CheckTempz = checkTemp.Checked;
-            //Properties.Settings.Default.Save();
             SaveSettings();
         }
 
         private void CheckTop_CheckedChanged(object sender, EventArgs e)
         {
-            //this.TopMost = CheckTop.Checked;
-            //Properties.Settings.Default.CheckTopz = CheckTop.Checked;
-            //Properties.Settings.Default.Save();
+            this.TopMost = checkTop.Checked;
             SaveSettings();
         }
 
@@ -703,60 +849,106 @@ namespace ImageScaler
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                // Ambil array file path yang di-drop
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                // Periksa apakah file pertama memiliki ekstensi PNG atau DDS
-                string fileExtension = Path.GetExtension(files[0]).ToLower();
-
-                if (fileExtension == ".png" || fileExtension == ".dds")
+                if (paths.Length > 0)
                 {
-                    e.Effect = DragDropEffects.Copy; // Tampilkan efek copy jika ekstensi valid
+                    string path = paths[0];
+
+                    if (Directory.Exists(path))
+                    {
+                        // Kalau folder, ijinkan drop
+                        e.Effect = DragDropEffects.Copy;
+                    }
+                    else
+                    {
+                        string ext = Path.GetExtension(path).ToLower();
+                        if (ext == ".png" || ext == ".dds")
+                        {
+                            e.Effect = DragDropEffects.Copy;
+                        }
+                        else
+                        {
+                            e.Effect = DragDropEffects.None;
+                        }
+                    }
                 }
                 else
                 {
-                    e.Effect = DragDropEffects.None; // Tidak bisa drop jika ekstensi tidak valid
+                    e.Effect = DragDropEffects.None;
                 }
             }
             else
             {
-                e.Effect = DragDropEffects.None; // Tidak bisa drop
+                e.Effect = DragDropEffects.None;
             }
         }
+
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
+            txtData.Clear();
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            // Jika ada file yang di-drop
             if (files.Length > 0)
             {
-                selectedImagePath = files[0]; // Ambil file pertama
+                string path = files[0];
 
-                // Periksa ekstensi file
-                string fileExtension = Path.GetExtension(selectedImagePath).ToLower();
-
-                if (fileExtension == ".png" || fileExtension == ".dds")
+                if (Directory.Exists(path))
                 {
-                    if (Path.GetExtension(selectedImagePath).ToLower() == ".dds")
-                    {
-                        string pngPath = Path.ChangeExtension(selectedImagePath, ".png");
-                        string pngDir = Path.GetDirectoryName(selectedImagePath);
-                        ConvertDDSToPNG(selectedImagePath, pngDir, pngPath);                        
-                        selectedImagePath = pngPath; // Setelah konversi, pilih file .png
-                    }
-                    Log($"\n");
-                    Log($"\nImage selected: {selectedImagePath}");
-                    Log($"\n");
+                    //Jika yang di-drop adalah folder
+                    HandleFolderDrop(path);
                 }
                 else
                 {
-                    Log($"\n");
-                    Log($"\nOnly PNG or DDS files are allowed.");
-                    Log($"\n");
+                    //Jika file tunggal (png/dds)
+                    selectedImagePath = path;
+
+                    string fileExtension = Path.GetExtension(selectedImagePath).ToLower();
+
+                    if (fileExtension == ".png" || fileExtension == ".dds")
+                    {
+                        if (fileExtension == ".dds")
+                        {
+                            Texdiag(selectedImagePath);
+                            LogData("-----------------------------------------");
+
+                            string pngPath = Path.ChangeExtension(selectedImagePath, ".png");
+                            string pngDir = Path.GetDirectoryName(selectedImagePath);
+                            ConvertDDSToPNG(selectedImagePath, pngDir, pngPath);
+                            selectedImagePath = pngPath;
+                        }
+
+                        Texdiag(selectedImagePath);
+                        LogData("-----------------------------------------");
+                        Log($"\nImage selected: {selectedImagePath}");
+                        txtName.Text = Path.GetFileName(selectedImagePath);
+                        txtName.SelectionStart = txtName.Text.Length;
+                        txtName.ScrollToCaret();
+                        panelBatch.SendToBack();
+                        Log($"\n");
+                    }
+                    else
+                    {
+                        Log($"\nOnly PNG or DDS files are allowed.\n");
+                    }
                 }
             }
         }
+        private void HandleFolderDrop(string folderPath)
+        {
+
+            selectedFolderPath = folderPath;
+            Log($"\nSelected folder: {selectedFolderPath}");
+            txtName.Text = Path.GetFileName(selectedFolderPath);
+            txtName.SelectionStart = txtName.Text.Length;
+            txtName.ScrollToCaret();
+            panelBatch.BringToFront();
+            txtName.BringToFront();
+            Log($"\n");
+            
+        }
+
 
         private void BtnOpen_Click(object sender, EventArgs e)
         {
@@ -768,6 +960,10 @@ namespace ImageScaler
             btnDifuse.BackColor = Color.Black;
             btnLinear.ForeColor = Color.Transparent;
             btnLinear.BackColor = Color.Black;
+            btnDifuse2.ForeColor = Color.Transparent;
+            btnDifuse2.BackColor = Color.Black;
+            btnLinear2.ForeColor = Color.Transparent;
+            btnLinear2.BackColor = Color.Black;
             BtnOpen2.ForeColor = Color.Transparent;
             BtnOpen2.BackColor = Color.Black;
 
@@ -795,6 +991,7 @@ namespace ImageScaler
         {
             using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
             {
+                txtData.Clear();
                 dialog.IsFolderPicker = true; // Pilih folder, bukan file
                 dialog.Title = "Select Folder"; // Judul dialog
 
@@ -804,6 +1001,9 @@ namespace ImageScaler
                     string selectedFolder = dialog.FileName;
                     selectedFolderPath = selectedFolder;
                     Log($"\nSelected folder: {selectedFolderPath}");
+                    txtName.Text = Path.GetFileName(selectedFolder);
+                    txtName.SelectionStart = txtName.Text.Length;
+                    txtName.ScrollToCaret();
                     Log($"\n");
                 }
                 else
@@ -892,6 +1092,8 @@ namespace ImageScaler
                             string pngDir = Path.GetDirectoryName(tempInput);
                             ConvertDDSToPNG(inputPath, pngDir, tempInput);
                             Log($"\nConverted to PNG: {tempInput}");
+                            Texdiag(tempInput);
+                            LogData("-----------------------------------------");
                             Log($"\n");
                         }
 
@@ -908,15 +1110,13 @@ namespace ImageScaler
                         ExecuteMagickCommand($"\"{opaqueUpscaled}\" \"{maskUpscaled}\" -alpha off -compose CopyOpacity -composite \"{finalOutput}\"");
                         Log($"\n");
                         Log($"\nOutput created: {finalOutput}");
+                        Texdiag(finalOutput);
+                        LogData("-----------------------------------------");
                         Log($"\n");
+                        Log("----------------------------------------------------------------------------------------");
+                        Log("----------------------------------------------------------------------------------------");
 
                         // Hapus file sementara setelah selesai
-                        File.Delete(opaque);
-                        File.Delete(opaqueUpscaled);
-                        File.Delete(mask);
-                        File.Delete(maskUpscaled);
-                        if (originalExt.ToLower() == ".dds" && File.Exists(tempInput))
-                            File.Delete(tempInput);
                     }
                     catch (Exception ex)
                     {
@@ -931,10 +1131,12 @@ namespace ImageScaler
             finally
             {
                 // Hapus folder sementara setelah proses selesai
-                if (Directory.Exists(tempFolder))
-                {
-                   Directory.Delete(tempFolder, true); // Hapus folder beserta isinya
-                }
+                if (!(checkTemp.Checked)) {
+                    if (Directory.Exists(tempFolder))
+                    {
+                        Directory.Delete(tempFolder, true); // Hapus folder beserta isinya
+                        }
+            }
             }
 
             btnUpscale2.ForeColor = Color.Black;
@@ -1007,7 +1209,7 @@ namespace ImageScaler
         }
 
         private void btnDifuse3_Click(object sender, EventArgs e)
-        {
+        {            
             btnUpscale2.ForeColor = Color.Transparent;
             btnUpscale2.BackColor = Color.Black;
             btnDifuse3.ForeColor = Color.Transparent;
@@ -1037,12 +1239,18 @@ namespace ImageScaler
                 try
                 {
                     string ddsFile = Path.GetDirectoryName(pngFile);
+                    string ddsFileN = Path.ChangeExtension(pngFile, ".dds");
+                    Texdiag(pngFile);
+                    LogData("-----------------------------------------");
 
                     // Konversi PNG ke DDS dengan BC7 sRGB
-                    ConvertToDDS(pngFile, ddsFile, $" -f BC{bc}_UNORM_SRGB -nologo --separate-alpha ");
+                    ConvertToDDS(pngFile, ddsFile, $" -f BC{bc}_UNORM_SRGB {upstat} -nologo --separate-alpha ");
                     Log($"\n");
                     Log($"\nConverted {pngFile} to {ddsFile}");
                     Log($"\n");
+                    string ddsFilen = Path.ChangeExtension(pngFile, ".dds");
+                    Texdiag(ddsFileN);
+                    LogData("-----------------------------------------");
 
                     // Hapus file PNG jika pngCheck dicentang
                     if (!pngCheck.Checked)
@@ -1063,6 +1271,7 @@ namespace ImageScaler
             Log($"\n");
             Log("\nAll PNG files processed and converted to SRGB.\n");
             Log($"\n");
+            LogData("-----------------------------------------");
             btnDifuse3.ForeColor = Color.Black;
             btnDifuse3.BackColor = Color.Lime;
             BtnOpen1.ForeColor = Color.Black;
@@ -1071,7 +1280,7 @@ namespace ImageScaler
         }
 
         private void btnLinear3_Click(object sender, EventArgs e)
-        {
+        {   
             btnUpscale2.ForeColor = Color.Transparent;
             btnUpscale2.BackColor = Color.Black;
             btnDifuse3.ForeColor = Color.Transparent;
@@ -1101,12 +1310,17 @@ namespace ImageScaler
                 try
                 {
                     string ddsFile = Path.GetDirectoryName(pngFile);
-
+                    string ddsFileN = Path.ChangeExtension(pngFile, ".dds");
+                    Texdiag(pngFile);
+                    LogData("-----------------------------------------");
                     // Konversi PNG ke DDS dengan BC7 sRGB
-                    ConvertToDDS(pngFile, ddsFile, $" -f BC{bc}_UNORM  -nologo --separate-alpha ");
+                    ConvertToDDS(pngFile, ddsFile, $" -f BC{bc}_UNORM {upstat2} -nologo --separate-alpha ");
                     Log($"\n");
-                    Log($"\nConverted {pngFile} to {ddsFile}");
+                    Log($"\nConverted {pngFile} to {ddsFile}");                    
                     Log($"\n");
+                    string ddsFilen = Path.ChangeExtension(pngFile, ".dds");
+                    Texdiag(ddsFileN);
+                    LogData("-----------------------------------------");
                     // Hapus file PNG jika pngCheck dicentang
                     if (!pngCheck.Checked)
                     {
@@ -1136,7 +1350,12 @@ namespace ImageScaler
             bc = comboBox1.SelectedItem.ToString();
         }
 
-        private void label7_Click(object sender, EventArgs e)
+        private void SRGBcheck_CheckedChanged(object sender, EventArgs e)
+        {
+            SRGBcheck.Checked = formatValue?.ToUpper().Contains("SRGB") == true;
+        }
+
+        private void pngCheck_CheckedChanged(object sender, EventArgs e)
         {
 
         }
